@@ -1,0 +1,56 @@
+.todoGroup {
+  display: flex;
+  max-width: 700px;
+  margin: auto;
+}
+.todoGroup div {
+  width: 25%;
+  margin: 20px 0;
+}
+.form-group {
+  max-width: 700px;
+  margin: 20px auto;
+}
+.form-group textarea,
+.form-group input {
+  width: 100%;
+  margin: 10px 0;
+}
+.todoGroup button {
+  margin: 0 2px;
+}
+.modal {
+  font-size: 12px;
+}
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px;
+}
+.modal > .content {
+  width: 100%;
+  padding: 10px 5px;
+}
+.modal > .actions {
+  margin: auto;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 10px 5px;
+  text-align: center;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
