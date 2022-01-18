@@ -1,21 +1,21 @@
 let listTodo = [
   {
-    id: 1,
-    content: "Học reactj",
+    title: "Học reactj",
     workDay: "2022-11-11",
     addTime: "2022-11-11",
+    details: "Đây là chi tiết nội dung 1",
   },
   {
-    id: 2,
-    content: "Học javascript",
+    title: "Học javascript",
     workDay: "2022-11-11",
     addTime: "2022-11-11",
+    details: "Đây là chi tiết nội dung 2",
   },
   {
-    id: 3,
-    content: "Học route",
+    title: "Học route",
     workDay: "2022-11-11",
     addTime: "2022-11-11",
+    details: "Đây là chi tiết nội dung 3",
   },
 ];
-export default listTodo;
+export { listTodo };

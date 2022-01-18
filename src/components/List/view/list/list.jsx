@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "../css/list.css";
-import { createTodo, removeTodo, updateTodo } from "../action/actionList";
+import "../../css/list.css";
+import { createTodo, removeTodo, updateTodo } from "../../action/actionList";
 import ShowList from "./showList";
+import ListDetails from "../listDetails/listDetails";
 
 class List extends Component {
   constructor(props) {
@@ -10,11 +11,17 @@ class List extends Component {
     this.state = {
       newData: this.props.newListTodo,
       showButton: true,
+      showModal: true,
     };
   }
-  handleChangeContent = (e) => {
+  handleChangeTitle = (e) => {
     this.setState({
-      content: e.target.value,
+      title: e.target.value,
+    });
+  };
+  handleChangeDetails = (e) => {
+    this.setState({
+      details: e.target.value,
     });
   };
   handleChangeWordDay = (e) => {
@@ -22,50 +29,69 @@ class List extends Component {
       workDay: e.target.value,
     });
   };
+
   handleSubmit = () => {
-    let newContent = this.state.content;
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
+    let addTime = year + "-" + month + "-" + day;
+    let newtitle = this.state.title;
     let newWorkDay = this.state.workDay;
-    this.props.ADD_LIST(newContent, newWorkDay);
+    let newDetails = this.state.details;
+    this.props.ADD_LIST(newtitle, newWorkDay, addTime, newDetails);
     this.setState({
       workDay: "",
-      content: "",
+      title: "",
+      details: "",
     });
   };
   handleDelele = (e) => {
     this.props.REMOVE_LIST(e);
     this.setState({
       workDay: "",
-      content: "",
+      title: "",
+      details: "",
     });
   };
 
   handleEdit = (val, key) => {
-    let { content, workDay } = val;
+    let { title, workDay, details } = val;
     this.setState({
+      title,
       workDay,
-      content,
+      details,
       idUpdate: key,
       showButton: false,
     });
   };
   handleUpdate = () => {
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
+    let addTime = year + "-" + month + "-" + day;
     let id = this.state.idUpdate;
-    let newContent = this.state.content;
+    let newtitle = this.state.title;
     let newWorkDay = this.state.workDay;
-    this.props.UPDATE_LIST(id, newContent, newWorkDay);
+    let newDetails = this.state.details;
+    this.props.UPDATE_LIST(id, newtitle, newWorkDay, addTime, newDetails);
     this.setState({
       workDay: "",
-      content: "",
+      title: "",
+      details: "",
       showButton: true,
     });
   };
   handleDestroyUpdate = () => {
     this.setState({
       workDay: "",
-      content: "",
+      title: "",
+      details: "",
       showButton: true,
     });
   };
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({ newData: nextProps.newListTodo });
   }
@@ -105,14 +131,24 @@ class List extends Component {
     return (
       <div>
         <div className="form-group">
+          <label>Tiêu đề</label>
+          <input
+            type="text"
+            plancerhoder="Tiêu đề"
+            className="form-control"
+            onChange={this.handleChangeTitle}
+            value={this.state.title}
+          />
+          <label>Chi tiết</label>
           <textarea
             type="text"
-            placeholder="Content"
+            plancerhoder="Nội dung"
             className="form-control"
-            onChange={this.handleChangeContent}
-            value={this.state.content}
+            onChange={this.handleChangeDetails}
+            value={this.state.details}
             rows="5"
           />
+          <label>Ngày làm</label>
           <input
             type="date"
             className="form-control"
@@ -125,7 +161,7 @@ class List extends Component {
         <div>
           <div></div>
           <div className="todoGroup">
-            <div>Nội dung</div>
+            <div>Tiêu đề</div>
             <div>Ngày làm</div>
             <div>Ngày tạo</div>
             <div>Tùy chọn</div>
@@ -134,6 +170,7 @@ class List extends Component {
             <ShowList
               value={val}
               key={key}
+              id={key}
               handleEdit={() => this.handleEdit(val, key)}
               handleDelele={() => this.handleDelele(key)}
             />
@@ -145,14 +182,18 @@ class List extends Component {
 }
 let mapDispatchToProps = (dispatch) => {
   return {
-    ADD_LIST: (content, workDay) => dispatch(createTodo(content, workDay)),
-    UPDATE_LIST: (id, content, workDay) =>
-      dispatch(updateTodo(id, content, workDay)),
+    ADD_LIST: (title, workDay, addTime, details) =>
+      dispatch(createTodo(title, workDay, addTime, details)),
+    UPDATE_LIST: (id, title, workDay, addTime, details) =>
+      dispatch(updateTodo(id, title, workDay, addTime, details)),
     REMOVE_LIST: (id) => dispatch(removeTodo(id)),
   };
 };
 let mapStateToProps = (state) => {
-  return { newListTodo: state.todoList };
+  console.log(state);
+  return {
+    newListTodo: state.todoList,
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

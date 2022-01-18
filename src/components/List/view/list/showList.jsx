@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import { Link, Router } from "react-router-dom";
 class ShowList extends Component {
   render() {
-    let { content, workDay, addTime } = this.props.value;
+    let { title, workDay, addTime } = this.props.value;
     return (
       <>
         <div className="todoGroup">
-          <div className="content">{content}</div>
+          <div className="title">{title}</div>
           <div className="workDay">{workDay}</div>
           <div className="workDay">{addTime}</div>
           <div className="setting">
+            <Link to={"/list-details/" + this.props.id}>
+              <button>Chi tiết</button>
+            </Link>
             <button onClick={this.props.handleEdit}>Sửa</button>
             <button onClick={this.props.handleDelele}>Xóa</button>
           </div>
@@ -17,4 +21,5 @@ class ShowList extends Component {
     );
   }
 }
+
 export default ShowList;
