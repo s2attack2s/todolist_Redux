@@ -10,13 +10,13 @@ import List from "./components/List/view/list/list";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={<List />} persistor={persistor}>
-      <BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={<List />} persistor={persistor}>
         <App />
-      </BrowserRouter>
-    </PersistGate>
-  </Provider>,
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
