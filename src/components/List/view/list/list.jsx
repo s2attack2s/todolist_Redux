@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import "../../css/list.css";
 import { createTodo, removeTodo, updateTodo } from "../../action/actionList";
 import ShowList from "./showList";
-import ListDetails from "../listDetails/listDetails";
 
 class List extends Component {
   constructor(props) {
@@ -19,11 +18,7 @@ class List extends Component {
       title: e.target.value,
     });
   };
-  handleChangeDetails = (e) => {
-    this.setState({
-      details: e.target.value,
-    });
-  };
+
   handleChangeWordDay = (e) => {
     this.setState({
       workDay: e.target.value,
@@ -38,29 +33,27 @@ class List extends Component {
     let addTime = year + "-" + month + "-" + day;
     let newtitle = this.state.title;
     let newWorkDay = this.state.workDay;
-    let newDetails = this.state.details;
-    this.props.ADD_LIST(newtitle, newWorkDay, addTime, newDetails);
+    this.props.ADD_LIST(newtitle, newWorkDay, addTime);
     this.setState({
+      content: "",
       workDay: "",
       title: "",
-      details: "",
     });
   };
   handleDelele = (e) => {
     this.props.REMOVE_LIST(e);
     this.setState({
+      content: "",
       workDay: "",
       title: "",
-      details: "",
     });
   };
 
   handleEdit = (val, key) => {
-    let { title, workDay, details } = val;
+    let { title, workDay } = val;
     this.setState({
       title,
       workDay,
-      details,
       idUpdate: key,
       showButton: false,
     });
@@ -74,12 +67,11 @@ class List extends Component {
     let id = this.state.idUpdate;
     let newtitle = this.state.title;
     let newWorkDay = this.state.workDay;
-    let newDetails = this.state.details;
-    this.props.UPDATE_LIST(id, newtitle, newWorkDay, addTime, newDetails);
+    this.props.UPDATE_LIST(id, newtitle, newWorkDay, addTime);
     this.setState({
       workDay: "",
       title: "",
-      details: "",
+      content: "",
       showButton: true,
     });
   };
@@ -87,7 +79,7 @@ class List extends Component {
     this.setState({
       workDay: "",
       title: "",
-      details: "",
+      content: "",
       showButton: true,
     });
   };
@@ -139,15 +131,7 @@ class List extends Component {
             onChange={this.handleChangeTitle}
             value={this.state.title}
           />
-          <label>Chi tiết</label>
-          <textarea
-            type="text"
-            plancerhoder="Nội dung"
-            className="form-control"
-            onChange={this.handleChangeDetails}
-            value={this.state.details}
-            rows="5"
-          />
+
           <label>Ngày làm</label>
           <input
             type="date"
@@ -182,15 +166,14 @@ class List extends Component {
 }
 let mapDispatchToProps = (dispatch) => {
   return {
-    ADD_LIST: (title, workDay, addTime, details) =>
-      dispatch(createTodo(title, workDay, addTime, details)),
-    UPDATE_LIST: (id, title, workDay, addTime, details) =>
-      dispatch(updateTodo(id, title, workDay, addTime, details)),
+    ADD_LIST: (title, workDay, addTime) =>
+      dispatch(createTodo(title, workDay, addTime)),
+    UPDATE_LIST: (id, title, workDay, addTime) =>
+      dispatch(updateTodo(id, title, workDay, addTime)),
     REMOVE_LIST: (id) => dispatch(removeTodo(id)),
   };
 };
 let mapStateToProps = (state) => {
-  console.log(state);
   return {
     newListTodo: state.todoList,
   };

@@ -18,18 +18,8 @@ function ReducerTodo(state = listTodo, action) {
       return state;
   }
 }
-function ReducerSuccessTodo(state = [], action) {
-  switch (action.type) {
-    case "SUCCESS_LIST":
-      state = [action.payload];
-      return state;
-    default:
-      return state;
-  }
-}
 
 const reduxStore = combineReducers({
   todoList: ReducerTodo,
-  success: ReducerSuccessTodo,
 });
 export default reduxStore;

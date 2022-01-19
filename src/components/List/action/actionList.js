@@ -1,21 +1,19 @@
-const createTodo = (title, workDay, addTime, details) => ({
+const createTodo = (title, workDay, addTime) => ({
   type: "ADD_LIST",
   payload: {
     title,
     workDay,
     addTime,
-    details,
   },
 });
 
-const updateTodo = (id, title, workDay, addTime, details) => ({
+const updateTodo = (id, title, workDay, addTime) => ({
   type: "UPDATE_LIST",
   payload: {
     id,
     title,
     workDay,
     addTime,
-    details,
   },
 });
 
@@ -26,12 +24,4 @@ const removeTodo = (id) => ({
   },
 });
 
-const successTodo = (id, status) => ({
-  type: "SUCCESS_LIST",
-  payload: {
-    id,
-    status,
-  },
-});
-
-export { createTodo, updateTodo, removeTodo, successTodo };
+export { createTodo, updateTodo, removeTodo };
